@@ -1,0 +1,13 @@
+# A destination server, named "local".  Add [servers.example] blocks as needed.
+[servers.local]
+address = "127.0.0.1"
+# Ports are optional (defaults are 80 and 443)
+http_port = 8080
+https_port = 8443
+
+# A redirection rule.  Repeat [[rules]] blocks to add more as needed.
+[[rules]]
+# Regular expression for the hostname to match: anything for *.example.net
+match_host = '\bexample\.net$'
+#match_port = '^(?:80|443)$'
+send_to = "local"

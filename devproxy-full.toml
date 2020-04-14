@@ -1,0 +1,58 @@
+# Destination servers that traffic can be re-routed to. Each server is in a
+# section named "servers.NAME". There is no default server; at least one must be
+# configured and named in a rule for devproxy to do anything.
+[servers.local]
+# Address of the server.  Can be DNS, IPv4, or IPv6.
+address = "127.0.0.1"
+# Optional port where the server accepts HTTP traffic; default 80.
+http_port = 8080
+# Optional port where the server accepts HTTPS traffic; default 443.
+https_port = 8443
+
+# Second server example, which defines only the required keys.
+[servers.virtualbox]
+address = "192.168.56.2"
+# Since no ports are defined, HTTP and HTTPS will be sent to ports 80 and 443,
+# respectively.
+
+# Listening configuration: where the proxy accepts connections. This example
+# corresponds to a proxy configuration of "localhost:8111". This section is
+# optional, but shown for completeness.
+[listen]
+address = "127.0.0.1"
+port = 8111
+
+# Debugging configurations. This entire section is optional, but shown for
+# completeness.
+[output]
+# Print status messages, e.g. "listening on x.x.x.x:xxxx with 3 active rules".
+# Default true.
+status = true
+# Print devproxy's routing decisions for every request. Default false. Rules may
+# be printed individually using "debug_rule" in the rule definition. Will be set
+# to true if the command line flag "-verbose" is used.
+debug_all_rules = false
+# Print debugging information from goproxy. Default false. Will be set to true
+# if the command line flag "-debug" is used.
+debug_proxy = false
+
+# Rules array.  Each rule is given a "[[rules]]" block.  Connections to any host
+# that matches the match_host/match_port configuration are actually made to the
+# server named in the send_to configuration.
+[[rules]]
+# act on connections to example.net's HTTPS port only
+match_host = '^example\.net$'
+match_port = '^443$'
+# Print routing decisions when this rule is matched
+debug_rule = true
+# forward this traffic to the destination server defined by [servers.virtualbox]
+send_to = "virtualbox"
+
+# Second entry in the rules array.  This one defines only the required keys.
+[[rules]]
+# act on connections to example.com, www.example.com, a.b.c.example.com, etc.
+match_host = '\bexample\.com$'
+# forward default ports (80 and 443) to the destination server. In this example
+# config file, a request like "https://example.com/" will result in a connection
+# to 127.0.0.1:8443.
+send_to = "local"
