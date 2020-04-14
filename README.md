@@ -37,14 +37,14 @@ URL is requested… and that proxy is devproxy.
 
 Given the configuration:
 
-   [[rules]]
-   match_host = '\bexample.com$'
-   send_to = local
+    [[rules]]
+    match_host = '\bexample.com$'
+    send_to = local
 
-   [servers.local]
-   address = 127.0.0.1
-   http_port = 8080
-   https_port = 8443
+    [servers.local]
+    address = 127.0.0.1
+    http_port = 8080
+    https_port = 8443
 
 When the browser requests http://example.com/gnorc from the proxy, then the
 following happens:
@@ -74,15 +74,15 @@ copies the encrypted data between browser and server.
 # Using it
 
 1. Clone anywhere with go 1.13 or newer.  You should end up with a
-	 `devproxy2` directory, containing this README.md file.
+	`devproxy2` directory, containing this README.md file.
 2. Edit [devproxy.toml](./devproxy.toml) to configure devproxy for your
-   environment. This is a minimal file; a much longer example with all possible
-   options, and comments for them, is in the
-   [devproxy-full.toml](./devproxy-full.toml) file.
+    environment. This is a minimal file; a much longer example with all possible
+    options, and comments for them, is in the
+    [devproxy-full.toml](./devproxy-full.toml) file.
 3. Run `go build`
 4. Run `./devproxy` (Linux/OS X) or `devproxy.exe` (Windows).
 5. Set your web proxy to 127.0.0.1:8111, or whatever was configured in your
-   `devproxy.toml` file.
+    `devproxy.toml` file.
 
 I use [Proxy Switcher and Manager](https://addons.mozilla.org/en-US/firefox/addon/proxy-switcher-and-manager/)
 with Firefox so that I can easily switch between using devproxy or not, and
@@ -126,7 +126,7 @@ makes the following major changes:
 
 - Configuration is done by file, instead of built into the binary
 - Matching occurs on host and port explicitly, instead of trying one regexp
-  against either a "host" or "host:port" format string
+    against either a "host" or "host:port" format string
 - Matching a rule results in a specific redirection, not running a function
 - The `-target`, `-listen`, and `-port` command-line options are removed
 - `debug_rule` configuration option added to allow verbosity per-rule
