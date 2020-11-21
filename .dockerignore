@@ -1,0 +1,6 @@
+# Let's only send the bits we need, no matter how cluttered the develompent
+# folder gets.  Ignore everything, then un-ignore critical files.
+*
+!*.go
+!/go.*
+!/docker.toml

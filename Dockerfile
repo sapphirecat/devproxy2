@@ -6,7 +6,7 @@ COPY . .
 RUN go build -o /out/devproxy2 && strip /out/devproxy2
 
 FROM scratch AS bin
-COPY --from=build /out/devproxy2 /
-COPY ./devproxy.toml /
+COPY --from=build /out/devproxy2 /bin/devproxy2
+COPY ./docker.toml /etc/devproxy.toml
 EXPOSE 8111/tcp
-ENTRYPOINT ["/devproxy2"]
+ENTRYPOINT ["/bin/devproxy2"]

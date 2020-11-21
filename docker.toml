@@ -1,0 +1,18 @@
+# Default configuration used by the Dockerfile.
+[listen]
+# Don't actually listen on 'localhost'.  It's a secure default for a host
+# system, but in Docker, it prevents connections to the exposed port.
+address = ""
+
+[servers.local]
+# Since "localhost" is the container, we use "host.docker.internal" to get to
+# the actual host machine (requires Docker 18.03+ on Windows or Mac, or
+# Docker 20.10+ on Linux)
+address = "host.docker.internal"
+http_port = 8080
+https_port = 8443
+
+[[rules]]
+match_host = '\bexample\.\w+$'
+match_port = '^80$'
+send_to = "local"
