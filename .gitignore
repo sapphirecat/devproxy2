@@ -1,10 +1,7 @@
 # build artifacts
-/devproxy
+/devproxy2
 *.exe
 
 # IDE files
 /.idea
 /.vscode
-
-# undo one of my super clever global .gitignore rules
-!*.com
