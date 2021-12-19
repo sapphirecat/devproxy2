@@ -8,7 +8,8 @@ import (
 	"path/filepath"
 	"regexp"
 
-	"github.com/pelletier/go-toml"
+	"github.com/mcuadros/go-defaults"
+	"github.com/pelletier/go-toml/v2"
 )
 
 // ConfigRule describes a rule as listed in the TOML configuration.
@@ -79,6 +80,7 @@ func ReadConfig(file string) (ConfigFile, error) {
 	if err != nil {
 		return config, err
 	}
+	defaults.SetDefaults(&config)
 	err = toml.Unmarshal(contents, &config)
 	return config, err
 }
