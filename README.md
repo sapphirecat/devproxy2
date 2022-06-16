@@ -80,7 +80,7 @@ copies the encrypted data between browser and server.
     options, and comments for them, is in the
     [devproxy-full.toml](./devproxy-full.toml) file.
 3. Run `go build`
-4. Run `./devproxy` (Linux/OS X) or `devproxy.exe` (Windows).
+4. Run `./devproxy2` (Linux/Mac) or `devproxy2.exe` (Windows).
 5. Set your web proxy to 127.0.0.1:8111, or whatever was configured in your
     `devproxy.toml` file.
 
