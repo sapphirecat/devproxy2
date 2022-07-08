@@ -4,9 +4,10 @@ package main
 // rights reserved.  See the accompanying LICENSE file for license terms.
 
 import (
-	"fmt"
 	"log"
+	"net"
 	"regexp"
+	"strconv"
 	"strings"
 )
 
@@ -62,13 +63,16 @@ func NewRuleset(capacity int) Ruleset {
 }
 
 func getTarget(rules Ruleset, hostname string, mode Mode) string {
-	var host string
-	var port string = "80"
-	split := strings.SplitN(hostname, ":", 2)
+	host, port, err := net.SplitHostPort(hostname)
 
-	host = split[0]
-	if len(split) > 1 {
-		port = split[1]
+	if err != nil {
+		// Parse the error string, and hope it's never changed/localized....
+		if strings.Contains(err.Error(), "missing port") {
+			host = hostname
+			port = "80"
+		} else {
+			log.Fatalf("Bad hostname: %s: %s", err.Error(), hostname)
+		}
 	}
 
 	for i := range rules.items {
@@ -98,9 +102,10 @@ func getTarget(rules Ruleset, hostname string, mode Mode) string {
 			destPort = rule.SendTo.HTTPSPort
 		}
 
-		destHostPort := fmt.Sprintf("%s:%d", destination, destPort)
+		destHostPort := net.JoinHostPort(destination, strconv.Itoa(destPort))
 		if rule.DebugRule {
-			log.Printf("match for %s:%s -> %s\n", host, port, destHostPort)
+			srcHostPort := net.JoinHostPort(host, port)
+			log.Printf("match for %s -> %s\n", srcHostPort, destHostPort)
 		}
 
 		return destHostPort

@@ -6,9 +6,10 @@ package main
 import (
 	"errors"
 	"flag"
-	"fmt"
 	"log"
+	"net"
 	"net/http"
+	"strconv"
 )
 
 // Args collects all command-line arguments.
@@ -63,7 +64,7 @@ func DoMain(config ConfigFile) error {
 	proxy := NewServer(ruleSet, config.Verbose.DebugGoProxy)
 
 	listen := config.Listen
-	listenAddr := fmt.Sprintf("%s:%d", listen.Address, listen.Port)
+	listenAddr := net.JoinHostPort(listen.Address, strconv.Itoa(listen.Port))
 	if config.Verbose.Status {
 		log.Println("listening on", listenAddr, "with", ruleSet.Length(), "active rules")
 	}
