@@ -79,14 +79,14 @@ func getTarget(rules Ruleset, hostname string, mode Mode) string {
 		// take a pointer to prevent range from copying the rule struct
 		rule := &rules.items[i]
 
-		if rule.MatchHost.MatchString(host) == false {
+		if !rule.MatchHost.MatchString(host) {
 			if rule.DebugRule {
 				text := rule.MatchHost.String()
 				log.Println("!match: host", host, "with", text)
 			}
 			continue
 		}
-		if rule.MatchPort != nil && rule.MatchPort.MatchString(port) == false {
+		if rule.MatchPort != nil && !rule.MatchPort.MatchString(port) {
 			if rule.DebugRule {
 				text := rule.MatchPort.String()
 				log.Println("!match: port", port, "with", text)
