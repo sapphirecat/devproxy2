@@ -45,6 +45,9 @@ type ConfigFile struct {
 func FindDefaultConfig() (string, error) {
 	filename := "devproxy.toml"
 	exe, err := os.Executable()
+	if err == nil {
+		exe, err = filepath.EvalSymlinks(exe)
+	}
 	path := filepath.Dir(exe)
 
 	if err != nil {
