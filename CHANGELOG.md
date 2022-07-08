@@ -8,6 +8,18 @@ with the clarification that "updating dependencies" is a feature update.
 Unsupported Go versions MAY be removed in such an update, at the
 developer's sole discretion.
  
+## [2.1.1] - 2022-07-08
+
+Improve security posture per
+[Golang code review notes](https://www.elttam.com/blog/golang-codereview/),
+via r/netsec.
+
+### Changed
+
+- Use `net.JoinHostPort()` where possible
+- Evaluate symlinks on the `os.Executable()` path
+- Checked with `gosec` tool
+
 ## [2.1.0] - 2021-12-19
 
 Updated dependencies and minimally tested (it builds and starts up) on
