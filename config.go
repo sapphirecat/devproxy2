@@ -79,7 +79,10 @@ func FindDefaultConfig() (string, error) {
 // ReadConfig reads a given configuration file and returns the config
 func ReadConfig(file string) (ConfigFile, error) {
 	var config ConfigFile
-	contents, err := ioutil.ReadFile(file)
+	// This file is not executed or displayed, unless there are vulnerabilities
+	// within TOML (out of scope), or TOML becomes unexpectedly Turing-complete
+	// and able to interface with the runtime.
+	contents, err := ioutil.ReadFile(file) // #nosec G304
 	if err != nil {
 		return config, err
 	}
