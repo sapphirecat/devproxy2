@@ -1,9 +1,8 @@
-FROM golang:1.13-alpine AS build
-RUN apk add binutils && rm -r /var/cache/
+FROM docker.io/library/golang:1.13-alpine AS build
 WORKDIR /src
 ENV CGO_ENABLED=0
 COPY . .
-RUN go build -o /out/devproxy2 && strip /out/devproxy2
+RUN go build -ldflags="-s -w" -trimpath -o /out/devproxy2
 
 FROM scratch AS bin
 COPY --from=build /out/devproxy2 /bin/devproxy2
