@@ -6,8 +6,6 @@ address = ""
 
 [servers.local]
 address = "nginx"
-http_port = 80
-https_port = 443
 
 [[rules]]
 match_host = '\bexample\.\w+$'

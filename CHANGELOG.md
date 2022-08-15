@@ -8,11 +8,16 @@ with the clarification that "updating dependencies" is a feature update.
 Unsupported Go versions MAY be removed in such an update, at the
 developer's sole discretion.
  
-## [2.1.1] - 2022-07-08
+## [2.1.1] - 2022-08-15
 
 Improve security posture per
 [Golang code review notes](https://www.elttam.com/blog/golang-codereview/),
 via r/netsec.
+
+### Fixed
+
+- [#1](https://github.com/sapphirecat/devproxy2/issues/1):
+  Default values for server ports were not honored
 
 ### Changed
 

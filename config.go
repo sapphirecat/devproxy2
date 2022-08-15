@@ -35,10 +35,10 @@ type ConfigOutput struct {
 
 // ConfigFile describes the top-level structure of the TOML configuration.
 type ConfigFile struct {
-	Servers map[string]Server `toml:"servers"`
-	Rules   []ConfigRule      `toml:"rules"`
-	Listen  ConfigListen      `toml:"listen"`
-	Verbose ConfigOutput      `toml:"output"`
+	Servers map[string]*Server `toml:"servers"`
+	Rules   []ConfigRule       `toml:"rules"`
+	Listen  ConfigListen       `toml:"listen"`
+	Verbose ConfigOutput       `toml:"output"`
 }
 
 // FindDefaultConfig returns the first config file path it finds
@@ -88,6 +88,11 @@ func ReadConfig(file string) (ConfigFile, error) {
 	}
 	defaults.SetDefaults(&config)
 	err = toml.Unmarshal(contents, &config)
+	// Servers were empty when we did SetDefaults, so apply them now
+	for _, ptr := range config.Servers {
+		defaults.SetDefaults(ptr)
+	}
+
 	return config, err
 }
 
@@ -100,7 +105,7 @@ func RulesetFromConfig(config ConfigFile) Ruleset {
 		var ok bool
 		var hostExp, portExp *regexp.Regexp
 		var serverName string
-		var server Server
+		var server *Server
 
 		matchHost := configRule.MatchHost
 		matchPort := configRule.MatchPort
@@ -132,7 +137,7 @@ func RulesetFromConfig(config ConfigFile) Ruleset {
 			MatchHost: hostExp,
 			MatchPort: portExp,
 			DebugRule: configRule.DebugRule,
-			SendTo:    server,
+			SendTo:    *server,
 		})
 	}
 
