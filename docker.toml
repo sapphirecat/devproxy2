@@ -5,12 +5,9 @@
 address = ""
 
 [servers.local]
-# Since "localhost" is the container, we use "host.docker.internal" to get to
-# the actual host machine (requires Docker 18.03+ on Windows or Mac, or
-# Docker 20.10+ on Linux)
-address = "host.docker.internal"
-http_port = 8080
-https_port = 8443
+address = "nginx"
+http_port = 80
+https_port = 443
 
 [[rules]]
 match_host = '\bexample\.\w+$'
