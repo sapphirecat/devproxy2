@@ -116,24 +116,23 @@ With `-debug`, devproxy tells goproxy to log what _it_ is doing.
 These options are fully independent.  Neither affects nor implies the other.
 
 
-# Docker
+# Container Test
 
 This repository includes support for building a container to run devproxy2,
 using the project's oldest supported version of Go (1.13) on the Alpine
 container.
 
-Components specific to Docker are as follows:
+Components specific to testing the container are as follows:
 
 1. [docker-compose.yml](./docker-compose.yml) – for building a `proxy` image
 2. Dockerfile – specifying the build instructions
-3. docker.toml – the configuration to embed in the Docker image
+3. docker.toml – the configuration to embed in the container image
 
 Using `docker-compose up` in the default setting should launch a container that
-forwards requests for `example.com` to the **host's** port 8080 (for HTTP) or
-8443 (for HTTPS.)
+forwards requests for `http://example.com/` to the nginx container's "it works"
+page.  Or, with Podman, try `sudo docker-compose up`.
 
-To reach the proper destination, this requires Docker 18.03+ on Windows or Mac,
-or Docker 20.10+ on Linux.
+This subsystem is currently tested by the author with Podman, not Docker.
 
 
 # Compatibility
