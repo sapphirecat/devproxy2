@@ -1,0 +1,49 @@
+# Sample systemd configuration for devproxy2, as a user service
+#
+# Assumes an installation in ~/.local/bin (config in ~/.local/etc)
+#
+# To activate: copy to ~/.config/systemd/system/devproxy.service
+# Then use the usual systemd commands with --user to manipulate it:
+#
+# systemctl --user --daemon-reload
+# systemctl --user enable --now devproxy.service
+#
+# NOTE: Commented lines in the [Service] section cannot be set for user
+# services (Ubuntu 22.04), but they are expected to work if they were allowed.
+
+[Unit]
+Description=development server proxy
+
+[Service]
+ExecStart=%h/.local/bin/devproxy2
+
+Umask=077
+SystemCallFilter=@system-service
+
+RestrictAddressFamilies=
+RestrictAddressFamilies=AF_INET
+RestrictAddressFamilies=AF_INET6
+
+#CapabilityBoundingSet=
+KeyringMode=private
+LockPersonality=true
+MemoryDenyWriteExecute=true
+NoNewPrivileges=true
+#PrivateDevices=true
+PrivateMounts=true
+PrivateTmp=true
+ProcSubset=pid
+#ProtectClock=true
+ProtectControlGroups=true
+ProtectHome=read-only
+#ProtectKernelLogs=true
+#ProtectKernelModules=true
+ProtectKernelTunables=true
+ProtectSytem=strict
+RestrictNamespaces=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
+SystemCallArchitectures=native
+
+[Install]
+WantedBy=multi-user.target
