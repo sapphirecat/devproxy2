@@ -3,8 +3,6 @@ services:
   proxy:
     build:
       context: .
-      cache_from:
-        - "docker.io/library/golang:1.13-alpine"
     image: devproxy2
     ports:
       - "8111:8111"
